@@ -1,35 +1,54 @@
 const Conversation = require('../Models/Conversation'),
-    Message = require('../Models/Message'),
-    User = require('../Models/User');
+    Message = require('../Models/Message');
 
 exports.getConversations = (req, res, next) => {
-    Conversation.find({ participants: 1 })
-                .select('_id')
-                .exec((err, conversations) => {
-                    if(err) {
-                        res.send({ error: err });
-                        return next(err);
-                    }
+    Conversation.find({}).select('_id').exec((err, conversations) => {
+        if (err) {
+            res.send({ error: err });
+            return next(err);
+        }
 
-                    const fullConversations = [];
-                    conversations.forEach((conversation) => {
-                        Message.find({ conversationId: conversation._id })
-                                .sort('-createdAt')
-                                .limit(1)
-                                .populate({
-                                    path: 'author',
-                                    select: 'firstName'
-                                })
-                                .exec((err, message) => {
-                                    if(err) {
-                                        res.send({ error: err });
-                                        return next(err);
-                                    }
-                                    fullConversations.push(message);
-                                    if(fullConversations.length === conversation.length) {
-                                        return res.status(200).json({ conversations: fullConversations });
-                                    }
-                                });
-                    });
-                });
+        const fullConversations = [];
+        conversations.forEach((c) => {
+            Message.find({ conversationId: c._id }).sort('-createdAt').limit(1).exec((err, data) => {
+                if (err) {
+                    res.send({ error: err });
+                    return next(err);
+                }
+                fullConversations.push(data[0]);
+                if (fullConversations.length === conversations.length) {
+                    return res.status(200).json({ conversations: fullConversations });
+                }
+            });
+        });
+        
+    })
+}
+
+exports.newConversation = (req, res, next) => {
+    const conversation = new Conversation({
+        participants: ['rankey', 'villa']
+    })
+
+    conversation.save((err, newConversation) => {
+        if (err) {
+            res.send({ error: err });
+            return next(err);
+        }
+
+        const message = new Message({
+            conversationId: newConversation._id,
+            body: 'Pruebas',
+            author: 'rankey'
+        });
+
+        message.save((err, newMessage) => {
+            if (err) {
+                res.send({ error: err });
+                return next(err);
+            }
+
+            return res.status(200).json({ message: 'Conversation started!', conversationId: newConversation._id });
+        });
+    });
 }

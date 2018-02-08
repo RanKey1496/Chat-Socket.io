@@ -4,7 +4,7 @@ const mongoose = require('mongoose'),
 const MessageSchema = new Schema({
     conversationId: { type: Schema.Types.ObjectId, required: true },
     body: { type: String, required: true },
-    author: { type: Schema.Types.ObjectId, ref: 'User' }
+    author: { type: String, required: true }
 }, { timestamps: true });
 
 module.exports = mongoose.model('Message', MessageSchema);

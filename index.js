@@ -15,7 +15,10 @@ if (isProduction) {
     mongoose.connect(process.env.MONGODB_URI);
     server = app.listen(3000)
 } else {
-    mongoose.connect(config.database);
+    mongoose.connect(config.database, (err) => {
+        if (err) throw err;
+        else console.log('Connected to database');
+    });
     mongoose.set('debug', true);
     server = app.listen(config.port);
     console.log(`Your server is running on port ${config.port}.`);
