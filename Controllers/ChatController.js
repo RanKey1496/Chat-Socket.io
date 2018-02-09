@@ -38,8 +38,8 @@ exports.newConversation = (req, res, next) => {
 
         const message = new Message({
             conversationId: newConversation._id,
-            body: 'Pruebas',
-            author: 'rankey'
+            body: req.body.body,
+            author: req.body.author
         });
 
         message.save((err, newMessage) => {
