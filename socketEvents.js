@@ -1,8 +1,11 @@
+const users = new Array;
+
 exports = module.exports = (io) => {
     io.on('connection', (socket) => {
         socket.on('register', (data) => {
             socket.username = data;
-            io.emit('user-registered', { username: socket.username });
+            users.push(data);
+            io.emit('user-registered', { users: users, username: socket.username });
         })
 
         socket.on('add-message', (data) => {
@@ -18,7 +21,12 @@ exports = module.exports = (io) => {
         });
 
         socket.on('disconnect', () => {
-            io.emit('user-disconnected', { username: socket.username });
+            let index = users.indexOf(socket.username);
+            if (index != -1) {
+                users.splice(index, 1);
+            }
+            users.filter((e) => e !== socket.username);
+            io.emit('user-disconnected', { users: users, username: socket.username });
         });
         
     })
