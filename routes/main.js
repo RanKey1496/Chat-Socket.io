@@ -9,5 +9,7 @@ module.exports = (app) => {
     //apiRoutes.use('/chat', chatRoutes);
     //apiRoutes.use('/user', userRoutes);
 
-    app.use('/', ChatController.getConversations);
+    app.use('/', (req, res, next) => {
+        return res.status(200).json({ status: ready });
+    });
 }
