@@ -6,7 +6,7 @@ const express = require('express'),
         mongoose = require('mongoose'),
         socketEvents = require('./socketEvents'),
         config = require('./Config/main'),
-        router = require('./Routes/main');
+        router = require('./routes/main.js');
 
 var isProduction = false;
 let server;
