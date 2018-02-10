@@ -5,8 +5,8 @@ const express = require('express'),
         morgan = require('morgan'),
         mongoose = require('mongoose'),
         socketEvents = require('./socketEvents'),
-        config = require('./Config/main');
-        //router = require('./Routes/main');
+        config = require('./Config/main'),
+        router = require('./Routes/main');
 
 var isProduction = false;
 let server;
@@ -33,7 +33,6 @@ app.use(bodyParser.json());
 app.use(morgan('dev'));
 
 app.use(cors());
-
-//router(app);
+router(app);
 
 module.exports = server;
