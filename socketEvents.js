@@ -2,6 +2,7 @@ const users = new Array;
 
 exports = module.exports = (io) => {
     io.on('connection', (socket) => {
+        console.log('User connected');
         socket.on('register', (data) => {
             socket.username = data;
             users.push(data);
