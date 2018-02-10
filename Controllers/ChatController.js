@@ -1,5 +1,5 @@
-const Conversation = require('../Models/Conversation'),
-    Message = require('../Models/Message');
+const Conversation = require('../Models/Conversation.js'),
+    Message = require('../Models/Message.js');
 
 exports.getConversations = (req, res, next) => {
     Conversation.find({}).select('_id').exec((err, conversations) => {

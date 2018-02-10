@@ -1,6 +1,6 @@
 const express = require('express');
-const chatRoutes = require('./api/chat');
-const userRoutes = require('./api/user');
+const chatRoutes = require('./api/chat.js');
+const userRoutes = require('./api/user.js');
 
 module.exports = (app) => {
     const apiRoutes = express.Router();

@@ -1,6 +1,6 @@
 const express = require('express');
 const routes = express.Router();
-const ChatController = require('../../Controllers/ChatController');
+const ChatController = require('../../Controllers/ChatController.js');
 
 routes.get('/', ChatController.getConversations);
 routes.get('/new', ChatController.newConversation);
