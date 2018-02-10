@@ -10,6 +10,7 @@ const express = require('express'),
 
 var isProduction = false;
 let server;
+let PORT = process.env.PORT || 5000;
 
 if (isProduction) {
     mongoose.connect(process.env.MONGODB_URI);
@@ -20,8 +21,8 @@ if (isProduction) {
         else console.log('Connected to database');
     });
     mongoose.set('debug', true);
-    server = app.listen(3000);
-    console.log(`Your server is running on port ${config.port}.`);
+    server = app.listen(PORT);
+    console.log(`Your server is running on port ${PORT}.`);
 }
 
 const io = require('socket.io').listen(server);
