@@ -20,7 +20,7 @@ if (isProduction) {
         else console.log('Connected to database');
     });
     mongoose.set('debug', true);
-    server = app.listen(80);
+    server = app.listen(3000);
     console.log(`Your server is running on port ${config.port}.`);
 }
 
